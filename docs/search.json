@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "exercise.html",
+    "href": "exercise.html",
+    "title": "",
+    "section": "",
+    "text": "import pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.tree import DecisionTreeClassifier\nfrom autogluon.tabular import TabularPredictor\n\n/home/cgb2/anaconda3/envs/yechan/lib/python3.11/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html\n  from .autonotebook import tqdm as notebook_tqdm\n\n\n\ndf = pd.read_csv(\"titanic.csv\")\ndf\n\n\n\n\n\n\n\n\nPassengerId\nSurvived\nPclass\nName\nSex\nAge\nSibSp\nParch\nTicket\nFare\nCabin\nEmbarked\n\n\n\n\n0\n1\n0\n3\nBraund, Mr. Owen Harris\nmale\n22.0\n1\n0\nA/5 21171\n7.2500\nNaN\nS\n\n\n1\n2\n1\n1\nCumings, Mrs. John Bradley (Florence Briggs Th...\nfemale\n38.0\n1\n0\nPC 17599\n71.2833\nC85\nC\n\n\n2\n3\n1\n3\nHeikkinen, Miss. Laina\nfemale\n26.0\n0\n0\nSTON/O2. 3101282\n7.9250\nNaN\nS\n\n\n3\n4\n1\n1\nFutrelle, Mrs. Jacques Heath (Lily May Peel)\nfemale\n35.0\n1\n0\n113803\n53.1000\nC123\nS\n\n\n4\n5\n0\n3\nAllen, Mr. William Henry\nmale\n35.0\n0\n0\n373450\n8.0500\nNaN\nS\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n886\n887\n0\n2\nMontvila, Rev. Juozas\nmale\n27.0\n0\n0\n211536\n13.0000\nNaN\nS\n\n\n887\n888\n1\n1\nGraham, Miss. Margaret Edith\nfemale\n19.0\n0\n0\n112053\n30.0000\nB42\nS\n\n\n888\n889\n0\n3\nJohnston, Miss. Catherine Helen \"Carrie\"\nfemale\nNaN\n1\n2\nW./C. 6607\n23.4500\nNaN\nS\n\n\n889\n890\n1\n1\nBehr, Mr. Karl Howell\nmale\n26.0\n0\n0\n111369\n30.0000\nC148\nC\n\n\n890\n891\n0\n3\nDooley, Mr. Patrick\nmale\n32.0\n0\n0\n370376\n7.7500\nNaN\nQ\n\n\n\n\n891 rows × 12 columns\n\n\n\n(1) df의 차원을 확인하는 코드를 작성하세요.\n(2) df의 처음 5개의 행을 출력하는 코드를 작성하세요.\n(3) df의 마지막 5개의 행을 출력하는 코드를 작성하세요.\n(4) df의 열을 출력하는 코드를 작성하세요.\n(5) train_test_split 함수를 이용하여 훈련자료와 테스트자료를 5:5로 나누는 코드를 작성하세요.\n\n단, 이때 테스트자료에서는 변수 “Survived”가 제외되어 있어야함.\n훈련자료는 df_train으로 테스트자료는 df_test로 저장되어 있을 것.\n\n(6) df_test의 처음 5개의 행을 출력해보세요. 승객의 생존유무를 나름의 논리로 추측해보세요. 추측의 결과가 맞는지 확인하는 코드를 제시하세요.\nhint: df에서 df_test의 인덱스에 해당하는 정보만 출력 (강의노트 p24 참고)\n(7) df_train의 성별 생존률을 확인하는 코드를 작성하세요.\n(8) “남성이면 사망하고, 여성이면 생존한다”라는 단순한 룰을 적용하여 df_test의 Survived열을 예측한다면 정확도는 얼마나 될까요?\n(9) df_train에서 10세미만승객의 생존률과 10세이상승객의 생존률을 구하는 코드를 작성하세요.\n(10) df_train에서 성별(Sex)과 탑승항구(Embarked)에 따른 생존률을 비교하는 코드를 작성하세요. 즉 아래의 표를 채우세요.\n\n\n\nSex\nEmbarked\nRate\n\n\n\n\nfemale\nC\n.\n\n\nfemale\nQ\n.\n\n\nfemale\nS\n.\n\n\nmale\nC\n.\n\n\nmale\nQ\n.\n\n\nmale\nS\n.\n\n\n\n(11) df_train에서 Sex, Pclass 열을 추출하고 pd.get_dummies 함수를 이용하여 원핫인코딩하세요.\n(12) 설명변수로 Sex, Age를 선택한 뒤 아래의 과정에 따라 의사결정나무모델을 훈련하고 성능을 확인하세요.\n\n데이터전처리: X, X_test 생성\n모형선택: DecisionTreeClassifier를 이용하여 의사결정나무 모델을 만들고 model변수에 저장\n적합: model의 .fit을 이용하여 훈련자료를 적합\n예측: model의 .predict를 이용하여 테스트자료를 예측하고 성능확인\n\n(13) 설명변수로 Sex, Age, Fare 를 선택한 뒤 아래의 과정에 따라 의사결정나무모델을 훈련하고 성능을 확인하세요.\n\n데이터전처리: X, X_test 생성\n모형선택: DecisionTreeClassifier를 이용하여 의사결정나무 모델을 만들고 model변수에 저장\n적합: model의 .fit을 이용하여 훈련자료를 적합\n예측: model의 .predict를 이용하여 테스트자료를 예측하고 성능확인\n\n(14) 설명변수로 “Pclass”, “Sex”, “Age”, “SibSp”, “Parch”, “Fare”, “Embarked”를 선택한 뒤 Autogluon을 이용하여 다양한 모델을 적합하고 성능을 확인하세요."
+  },
+  {
     "objectID": "qslides.html#imports",
     "href": "qslides.html#imports",
     "title": "AI 기반 데이터 사이언스",
@@ -18,35 +25,35 @@
     "href": "qslides.html#the-story-of-titanic",
     "title": "AI 기반 데이터 사이언스",
     "section": "The Story of Titanic",
-    "text": "The Story of Titanic\nChapter 1. Jack and Rose Board the Ship\nThe movie Titanic starts with two people from very different lives. Jack Dawson gets a Titanic ticket by chance when he plays a card game with his friend on the day the ship leaves. He runs to the dock and gets on the ship just before it leaves. His ticket is for third class, which is the cheapest.\nRose DeWitt Bukater is already on the ship at the beginning of the movie. She gets on the Titanic with her boyfriend Cal and her mother. They are rich and get special treatment. Rose wears fancy clothes, eats expensive food, and stays in a beautiful room. But she feels trapped and unhappy"
+    "text": "The Story of Titanic\nChapter 1. Jack and Rose Board the Ship\nThe movie Titanic starts with two people from very different lives. Jack Dawson gets a Titanic ticket by chance when he plays a card game with his friend on the day the ship leaves. He runs to the dock and gets on the ship just before it leaves. His ticket is for third class, which is the cheapest.\nhttps://www.youtube.com/watch?v=tEM0I3ltp7M\nRose DeWitt Bukater is already on the ship at the beginning of the movie. She gets on the Titanic with her boyfriend Cal and her mother. They are rich and get special treatment. Rose wears fancy clothes, eats expensive food, and stays in a beautiful room. But she feels trapped and unhappy.\nhttps://www.youtube.com/watch?v=3uCi1g_aV-g"
   },
   {
     "objectID": "qslides.html#the-story-of-titanic-1",
     "href": "qslides.html#the-story-of-titanic-1",
     "title": "AI 기반 데이터 사이언스",
     "section": "The Story of Titanic",
-    "text": "The Story of Titanic\nChapter 2. They Fall in Love\nJack and Rose meet on the ship. Jack saves Rose when she is in danger. They talk, laugh, and spend time together. Soon, they fall in love."
+    "text": "The Story of Titanic\nChapter 2. They Fall in Love\nJack and Rose meet on the ship. Jack saves Rose when she is in danger. They talk, laugh, and spend time together. Soon, they fall in love.\nhttps://www.youtube.com/watch?v=erAQ9LkftwA\nhttps://www.youtube.com/watch?v=oklPl95DC8c"
   },
   {
     "objectID": "qslides.html#the-story-of-titanic-2",
     "href": "qslides.html#the-story-of-titanic-2",
     "title": "AI 기반 데이터 사이언스",
     "section": "The Story of Titanic",
-    "text": "The Story of Titanic\nChapter 3. The Sinking and the Divided Paths\nWhen the Titanic strikes the iceberg, chaos begins to unfold. But this chaos is not delivered equally to everyone on board.\nIn the film, a clear difference is shown between first-class and third-class passengers. First-class passengers are quickly and politely informed by crew members. They receive calm explanations, are given life jackets, and are carefully guided toward the lifeboats. They are seen dressing in formal clothes and preparing for evacuation in an orderly manner.\nMeanwhile, third-class passengers go a long time without any information about the accident. Many find the stairways and corridors blocked, unable to reach the upper decks. Families wander the ship in confusion, and others wait helplessly behind locked gates— a powerful image of the class-based gap in access to survival.\nAmid the growing panic, Rose’s fiancé, Cal, begins to search for her. As a wealthy gentleman, he urges Rose to get on a lifeboat and escape with him."
+    "text": "The Story of Titanic\nChapter 3. The Sinking and the Divided Paths\nWhen the Titanic strikes the iceberg, chaos begins to unfold. But this chaos is not delivered equally to everyone on board.\nIn the film, a clear difference is shown between first-class and third-class passengers. First-class passengers are quickly and politely informed by crew members. They receive calm explanations, are given life jackets, and are carefully guided toward the lifeboats. They are seen dressing in formal clothes and preparing for evacuation in an orderly manner.\nMeanwhile, third-class passengers go a long time without any information about the accident. Many find the stairways and corridors blocked, unable to reach the upper decks. Families wander the ship in confusion, and others wait helplessly behind locked gates— a powerful image of the class-based gap in access to survival.\nAmid the growing panic, Rose’s fiancé, Cal, begins to search for her. As a wealthy gentleman, he urges Rose to get on a lifeboat and escape with him.\nhttps://www.youtube.com/watch?v=Gmw1q0CprEA"
   },
   {
     "objectID": "qslides.html#the-story-of-titanic-3",
     "href": "qslides.html#the-story-of-titanic-3",
     "title": "AI 기반 데이터 사이언스",
     "section": "The Story of Titanic",
-    "text": "The Story of Titanic\nChapter 4. The Lifeboat Scene\nCal tells Rose to get on a lifeboat. She agrees at first and is lowered away from Jack.\nBut as the boat goes down, Rose looks up at him. She suddenly jumps back onto the ship. She chooses to stay with Jack, even if it means risking her life.\nJack and Rose run through the sinking ship together. They try to find a way out as water floods the halls. Their love becomes stronger in the face of fear."
+    "text": "The Story of Titanic\nChapter 4. The Lifeboat Scene\nCal tells Rose to get on a lifeboat. She agrees at first and is lowered away from Jack.\nBut as the boat goes down, Rose looks up at him. She suddenly jumps back onto the ship. She chooses to stay with Jack, even if it means risking her life.\nJack and Rose run through the sinking ship together. They try to find a way out as water floods the halls. Their love becomes stronger in the face of fear.\nhttps://www.youtube.com/watch?v=_qTZRD1_ybQ"
   },
   {
     "objectID": "qslides.html#the-story-of-titanic-4",
     "href": "qslides.html#the-story-of-titanic-4",
     "title": "AI 기반 데이터 사이언스",
     "section": "The Story of Titanic",
-    "text": "The Story of Titanic\nChapter 5. The End and the Memory\nAs the Titanic sinks deeper into the sea, Jack and Rose struggle to survive together until the very end. They cling to a broken piece of wood, floating in the freezing ocean.\nJack protects Rose and says, “Never give up. Never let go.” Rose holds his promise deep in her heart.\nWhen a lifeboat finally arrives, Rose is rescued. But Jack quietly slips into the cold water and disappears.\nLater, on the lifeboat, a rescuer asks for her name. She answers, “Rose Dawson.”"
+    "text": "The Story of Titanic\nChapter 5. The End and the Memory\nAs the Titanic sinks deeper into the sea, Jack and Rose struggle to survive together until the very end. They cling to a broken piece of wood, floating in the freezing ocean.\nJack protects Rose and says, “Never give up. Never let go.” Rose holds his promise deep in her heart.\nWhen a lifeboat finally arrives, Rose is rescued. But Jack quietly slips into the cold water and disappears.\nLater, on the lifeboat, a rescuer asks for her name. She answers, “Rose Dawson.”\nhttps://www.youtube.com/watch?v=D7_SqyWiPOg"
   },
   {
     "objectID": "qslides.html#titanic-dataset",
@@ -214,7 +221,7 @@
     "href": "qslides.html#titanic-predictor-no-ml-just-guess-7",
     "title": "AI 기반 데이터 사이언스",
     "section": "Titanic Predictor: No ML, Just Guess",
-    "text": "Titanic Predictor: No ML, Just Guess\nLet’s go back to the movie for a moment. Was it really just\n\n“women first”?\n\nIn situations like this, we often expect the most vulnerable — women and children — to be given priority. Even the film hints at this principle. Now let’s take a closer look at the data to see whether younger passengers were also more likely to survive."
+    "text": "Titanic Predictor: No ML, Just Guess\nLet’s go back to the movie for a moment. Was it really just\n\n“women first”?\n\nIn situations like this, we often expect the most vulnerable — women and children — to be given priority. Even the film hints at this principle. Now let’s take a closer look at the data to see whether younger passengers were also more likely to survive.\nhttps://www.youtube.com/watch?v=W0kURU_2H3c"
   },
   {
     "objectID": "qslides.html#titanic-predictor-no-ml-just-guess-8",
@@ -235,7 +242,7 @@
     "href": "qslides.html#titanic-predictor-no-ml-just-guess-10",
     "title": "AI 기반 데이터 사이언스",
     "section": "Titanic Predictor: No ML, Just Guess",
-    "text": "Titanic Predictor: No ML, Just Guess\nThe plot below visualizes the age distribution of passengers based on their survival status. The blue area shows the age distribution of those who survived, while the red area represents those who did not. Notably, children under the age of 10 show a relatively higher survival rate, supporting the idea that the “women and children first” principle may have been applied during the evacuation.\n\nFigure: Survival Rate by Age Distribution"
+    "text": "Titanic Predictor: No ML, Just Guess\nThe plot below visualizes the age distribution of passengers based on their survival status. The blue area shows the age distribution of those who survived, while the red area represents those who did not. Notably, children under the age of 10 show a relatively higher survival rate, supporting the idea that the “women and children first” principle may have been applied during the evacuation.\n\n\nCode\nfig, ax = plt.subplots(figsize=(10, 5))\n\n# 공통 X축 범위 설정\nx_range = (0, 80)\n\n# KDE plot for survived == 0 and 1\nsns.kdeplot(data=df_train[df_train.Survived == 0], x=\"Age\", fill=True, label=\"Did Not Survive\", color=\"salmon\")\nsns.kdeplot(data=df_train[df_train.Survived == 1], x=\"Age\", fill=True, label=\"Survived\", color=\"skyblue\")\n\nax.set_xlim(x_range)\nax.set_title(\"Age Distribution by Survival Status\")\nax.set_xlabel(\"Age\")\nax.set_ylabel(\"Density\")\nax.legend()\n\nplt.tight_layout()\nplt.show()\n\n\n\nFigure: Survival Rate by Age Distribution"
   },
   {
     "objectID": "qslides.html#titanic-predictor-no-ml-just-guess-11",
